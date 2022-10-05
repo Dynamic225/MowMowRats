@@ -6,7 +6,7 @@ package mowmowrats;
 
 /**
  *
- * @author Anthony Wittenborn
+ * @author Dynamic
  */
 public class MowmowRats {
 
