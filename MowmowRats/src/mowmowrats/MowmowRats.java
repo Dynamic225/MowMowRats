@@ -6,9 +6,7 @@ package mowmowrats;
 
 /**
  *
- * @author Anthony Wittenborn
- * @author Alexandria Mwaura
- * @author Matti Lambert
+ * @author Anthony Wittenborn, Alexandria Mwaura, Matti Lambert
  */
 public class MowmowRats {
 //comment here testing 
