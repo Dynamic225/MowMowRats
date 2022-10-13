@@ -8,6 +8,7 @@ package mowmowrats;
  *
  * @author Anthony Wittenborn
  * @author Alexandria Mwaura
+ * @author Matti Lambert
  */
 public class MowmowRats {
 //comment here testing 
