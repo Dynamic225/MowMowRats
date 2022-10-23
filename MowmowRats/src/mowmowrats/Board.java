@@ -57,12 +57,13 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         super.paintComponent(g);
         
         drawBackground(g);
-        drawScore(g);
         
         for (Rat rat : rats) {
             rat.draw(g, this);
         }
         player.draw(g, this);
+        
+        drawScore(g);
         
         Toolkit.getDefaultToolkit().sync();
     }
