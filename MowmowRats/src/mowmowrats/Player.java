@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 /**
  * Stores information about the player
  * 
- * @author Anthony Wittenborn, Matti Lambert
+ * @author Matti Lambert
  */
 public class Player {
     
@@ -25,6 +25,9 @@ public class Player {
     //keep track of the score
     private int score;
     
+    /**
+     * Constructor for the player
+     */
     public Player() {
         loadImage();
         
@@ -33,7 +36,9 @@ public class Player {
         score = 0;
     }
     
-    //loads the image file so the player icon is not a blank icon
+    /**
+     * loads the Mowmow image file
+     */
     private void loadImage() {
         try {
             final String imageName = "TempMowMow.png";
