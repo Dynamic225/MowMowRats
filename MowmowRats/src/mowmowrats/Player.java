@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
  */
 public class Player {
     
-    //image of position of the player
+    //image to represent position of the player
     private BufferedImage image;
     
     //current position of the player on the board
@@ -36,7 +36,8 @@ public class Player {
     //loads the image file so the player icon is not a blank icon
     private void loadImage() {
         try {
-            image = ImageIO.read(new File("TempMowMow.png"));
+            final String imageName = "TempMowMow.png";
+            image = ImageIO.read(new File("res/" + imageName));
         } catch(IOException exc) {
             System.out.println("Error opening image file: " + exc.getMessage());
         }
@@ -45,11 +46,11 @@ public class Player {
     /**
      * creates the graphic of the player
      * 
-     * @param g represents the player icon
-     * @param observe allows the image to be seen on the screen
+     * @param g the graphics element
+     * @param observer the image observer
      */
-    public void draw(Graphics g, ImageObserver observe) {
-        g.drawImage(image, pos.x * Board.TILE_SIZE, pos.y * Board.TILE_SIZE, observe);
+    public void draw(Graphics g, ImageObserver observer) {
+        g.drawImage(image, pos.x * Board.TILE_SIZE, pos.y * Board.TILE_SIZE, observer);
     }
     
     /**
