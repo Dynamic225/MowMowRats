@@ -55,7 +55,14 @@ public class Player {
      * @param observer the image observer
      */
     public void draw(Graphics g, ImageObserver observer) {
-        g.drawImage(image, pos.x * Board.TILE_SIZE, pos.y * Board.TILE_SIZE, observer);
+        g.drawImage(
+            image, 
+            pos.x * Board.TILE_SIZE, 
+            pos.y * Board.TILE_SIZE, 
+            Board.TILE_SIZE, 
+            Board.TILE_SIZE, 
+            observer
+        );
     }
     
     /**

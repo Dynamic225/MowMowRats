@@ -20,14 +20,14 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     
     private Timer timer;
     private Player player;
-    private ArrayList rats;
+    private ArrayList<Rat> rats;
     //private ArrayList walls; //TODO add this later
     
     public Board() {
         //set board size
         setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * ROWS));
         //set background color
-        setBackground(new Color(232));
+        setBackground(new Color(232, 232, 232));
         
         //initialize the game state
         player = new Player();
@@ -88,7 +88,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
      * @param g the graphics component
      */
     private void drawBackground(Graphics g) {
-        g.setColor(new Color(214));
+        g.setColor(new Color(214, 214, 214));
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 //color every other tile
@@ -136,7 +136,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
      * @return ratList the list of rats
      */
     private ArrayList populateRats() {
-        ArrayList ratList = new ArrayList<>();
+        ArrayList ratList = new ArrayList<Rat>();
         Random rand = new Random();
         
         for (int i=0; i < NUM_RATS; i++) {
@@ -152,7 +152,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
      * Removes the rats from the board and adds to the score
      */
     private void collectRats() {
-        ArrayList collectedRats = new ArrayList<>();
+        ArrayList collectedRats = new ArrayList<Rat>();
         for (Rat rat : rats) {
             //if player is on same tile as rat, collect the rat
             if (player.getPos().equals(rat.getPos())) {
