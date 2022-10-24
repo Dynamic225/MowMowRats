@@ -5,7 +5,6 @@ package mowmowrats;
  * @author Anthony Wittenborn, Matti Lambert,Alexandria Mwaura, Ashley Poteau
  */
 public class MowmowRats {
-//comment here testing 
     /**
      * @param args the command line arguments
      */
