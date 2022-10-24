@@ -12,6 +12,9 @@ public class MowmowRats {
      * Window initialization code
      */
     private static void initWindow() {
+        //start title screen
+        Title title = new Title();
+        title.launchTitle();
         //create window with title "Mowmow and the Rats"
         JFrame window = new JFrame("MowMow and the Rats");
         //make the program stop when the window closes
