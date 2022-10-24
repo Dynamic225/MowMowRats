@@ -7,14 +7,11 @@ import javax.swing.*;
  *
  * @author Anthony Wittenborn, Matti Lambert,Alexandria Mwaura, Ashley Poteau
  */
-public class MowmowRats {
+public class MowmowRats extends Title implements RunFromStart {
     /**
      * Window initialization code
      */
     private static void initWindow() {
-        //start title screen
-        Title title = new Title();
-        title.launchTitle();
         //create window with title "Mowmow and the Rats"
         JFrame window = new JFrame("MowMow and the Rats");
         //make the program stop when the window closes
@@ -41,14 +38,17 @@ public class MowmowRats {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Title title = new Title();
-        title.launchTitle();
-        
+        MowmowRats game = new MowmowRats();
+        game.launchTitle();
+    }
+    
+    @Override
+    public void startCode(JFrame title) {
+        title.setVisible(false);
         //invokeLater() used to prevent our graphics from blocking the GUI
         //using a lambda expression to replace "new Runnable() {run() {//code}}"
         SwingUtilities.invokeLater(() -> {
             initWindow();
         });
     }
-    
 }
