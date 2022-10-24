@@ -142,7 +142,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         Random rand = new Random();
         Random ratAmt = new Random();
         int upperBound = 20;
-        int randomRat = ratAmt.nextInt(upperBound);
+        int lowerBound = 5;
+        int randomRat = ratAmt.nextInt(lowerBound, upperBound);
         
         for (int i=0; i < randomRat; i++) {
             int ratX = rand.nextInt(COLUMNS);
