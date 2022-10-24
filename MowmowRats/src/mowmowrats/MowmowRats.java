@@ -41,6 +41,9 @@ public class MowmowRats {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Title title = new Title();
+        title.launchTitle();
+        
         //invokeLater() used to prevent our graphics from blocking the GUI
         //using a lambda expression to replace "new Runnable() {run() {//code}}"
         SwingUtilities.invokeLater(() -> {
