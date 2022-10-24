@@ -9,7 +9,7 @@ public class Title {
     /**
      * launches the title screen window
      */
-    public static void launchTitle(){
+    public void launchTitle(){
       JFrame win = new JFrame();
       win.setSize(650, 450);
       win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
