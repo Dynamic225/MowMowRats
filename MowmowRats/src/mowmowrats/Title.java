@@ -1,15 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mowmowrats;
+
 import javax.swing.*;
 /**
- *
+ * Title screen graphics
  * @author ashley
  */
 public class Title {
-    
+    /**
+     * launches the title screen window
+     */
     public static void launchTitle(){
       JFrame win = new JFrame();
       win.setSize(650, 450);
