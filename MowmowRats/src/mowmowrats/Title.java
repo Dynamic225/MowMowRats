@@ -17,7 +17,8 @@ public abstract class Title implements RunFromStart {
         title.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         title.setTitle("MowMow and the Rats");
         title.setVisible(true);
-
+        title.setLocationRelativeTo(null); //put the title in middle of screen
+        
         // start button, starts game
         JButton start = new JButton("Start");  
         start.setSize(100,30);
