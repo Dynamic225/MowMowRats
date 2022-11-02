@@ -16,7 +16,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     public static final int TILE_SIZE = 50;
     public static final int ROWS = 12;
     public static final int COLUMNS = 18;
-    public static final int NUM_RATS = 5;
+    
+    
     
     private Timer timer;
     private Player player;
@@ -27,7 +28,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         //set board size
         setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * ROWS));
         //set background color
-        setBackground(new Color(232, 232, 232));
+        setBackground(new Color(232, 218, 160));
         
         //initialize the game state
         player = new Player();
@@ -89,7 +90,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
      * @param g the graphics component
      */
     private void drawBackground(Graphics g) {
-        g.setColor(new Color(214, 214, 214));
+        g.setColor(new Color(203, 182, 94));
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 //color every other tile
@@ -139,8 +140,12 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private ArrayList populateRats() {
         ArrayList ratList = new ArrayList<Rat>();
         Random rand = new Random();
+        Random ratAmt = new Random();
+        int upperBound = 20;
+        int lowerBound = 5;
+        int randomRat = ratAmt.nextInt(lowerBound, upperBound);
         
-        for (int i=0; i < NUM_RATS; i++) {
+        for (int i=0; i < randomRat; i++) {
             int ratX = rand.nextInt(COLUMNS);
             int ratY = rand.nextInt(ROWS);
             ratList.add(new Rat(ratX, ratY));
