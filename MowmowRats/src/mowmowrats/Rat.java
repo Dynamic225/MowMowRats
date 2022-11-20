@@ -23,15 +23,14 @@ public class Rat {
     /**
      * constructor for the rat
      * 
-     * @param x rat's x pos on grid
-     * @param y rat's y pos on grid
+     * @param pos point at which to generate rat
      */
-    public Rat(int x, int y) {
+    public Rat(Point ratPos) {
         // load the assets
         loadImage();
 
         // initialize the state
-        pos = new Point(x, y);
+        pos = ratPos;
     }
     /**
      * load the image to display 

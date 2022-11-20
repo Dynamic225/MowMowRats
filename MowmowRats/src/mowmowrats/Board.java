@@ -2,6 +2,7 @@ package mowmowrats;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.Point;
 import java.util.ArrayList; 
 import java.util.Random;
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private Timer timer;
     private Player player;
     private ArrayList<Rat> rats;
-    //private ArrayList walls; //TODO add this later
+    private ArrayList<Point> walls; //TODO add this later
     
     public Board() {
         //set board size
@@ -31,9 +32,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         setBackground(new Color(232, 218, 160));
         
         //initialize the game state
+        walls = generateWalls(); 
         player = new Player();
         rats = populateRats();
-        //walls = generateWalls(); //TODO add walls later
         
         //timer will call the actionPerformed() method every DELAY ms
         timer = new Timer(DELAY, this);
@@ -46,7 +47,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
      * code that is called every game tick
      */
     public void actionPerformed(ActionEvent e) {
-        player.tick();
+        player.tick(walls);
         
         collectRats();
         
@@ -58,6 +59,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         super.paintComponent(g);
         
         drawBackground(g);
+        
+        drawWalls(g);
         
         for (Rat rat : rats) {
             rat.draw(g, this);
@@ -139,6 +142,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
      */
     private ArrayList populateRats() {
         ArrayList ratList = new ArrayList<Rat>();
+        ArrayList ratPosList = new ArrayList<Point>();
         Random rand = new Random();
         Random ratAmt = new Random();
         int upperBound = 20;
@@ -146,9 +150,16 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         int randomRat = ratAmt.nextInt(lowerBound, upperBound);
         
         for (int i=0; i < randomRat; i++) {
-            int ratX = rand.nextInt(COLUMNS);
-            int ratY = rand.nextInt(ROWS);
-            ratList.add(new Rat(ratX, ratY));
+            int ratX = -1;
+            int ratY = -1;
+            Point ratPos = new Point(ratX, ratY);
+            while (ratPosList.contains(ratPos) || walls.contains(ratPos) || ratPos.x == -1) {
+                ratX = rand.nextInt(COLUMNS);
+                ratY = rand.nextInt(ROWS);
+                ratPos = new Point(ratX, ratY);
+            }
+            ratPosList.add(ratPos);
+            ratList.add(new Rat(ratPos));
         }
         
         return ratList;
@@ -170,10 +181,75 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         rats.removeAll(collectedRats);
     }
     
-    //TODO generate the walls
-    /*
-    private ArrayList generateWalls() {
-        ArrayList walls = new ArrayList<>();
+    private ArrayList<Point> generateWalls() {
+        ArrayList<Point> walls = new ArrayList<>();
+        Random choice = new Random();
+        Point pos = new Point();
+        
+        switch (choice.nextInt(1)) {
+            case 0 -> {
+                pos.x = 2;
+                for (int i=1; i<=5; i++) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                for (int i=3; i<=7; i++) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
+                pos = new Point(14, 3);
+                walls.add(pos);
+                for (int i=4; i<=9; i++) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                for (int i=13; i>=8; i--) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
+                walls.add(new Point(3, 9));
+                walls.add(new Point(2, 9));
+                walls.add(new Point(4, 9));
+                walls.add(new Point(3, 10));
+                walls.add(new Point(3, 8));
+                pos = new Point(6, 2);
+                walls.add(pos);
+                for (int i=7; i<=11; i++) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
+            }
+            /*case 1 -> {
+                
+            }
+            case 2 -> {
+                
+            }
+            case 3 -> {
+                
+            }*/
+        }
+        
+        
+        
+        return walls;
     }
-    */
+    
+    private void drawWalls(Graphics g) {
+        g.setColor(new Color(0, 0, 0));
+        for (int i=0; i<walls.size(); i++) {
+            Point pos = walls.get(i);
+            g.fillRect(
+                pos.x * TILE_SIZE,
+                pos.y * TILE_SIZE,
+                TILE_SIZE,
+                TILE_SIZE
+            );
+        }
+    }
 }

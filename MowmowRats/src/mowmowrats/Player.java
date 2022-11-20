@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.util.ArrayList;
 
 /**
  * Stores information about the player
@@ -21,6 +22,7 @@ public class Player {
     
     //current position of the player on the board
     private Point pos;
+    private Point lastPos;
     
     //keep track of the score
     private int score;
@@ -71,6 +73,7 @@ public class Player {
      * @param event represents the response to the key being pressed
      */
     public void keyPressed(KeyEvent event) {
+        lastPos = (Point)pos.clone();
         int key = event.getKeyCode();
         
         //move the player depending on key pressed
@@ -89,19 +92,19 @@ public class Player {
     }
     
     //updates the state of the player
-    public void tick() {
+    public void tick(ArrayList<Point> walls) {
         //prevents the player from moving off the horizontal side of the board
-        if(pos.x < 0) {
-            pos.x = 0;
-        } else if(pos.x >= Board.COLUMNS) {
-            pos.x = Board.COLUMNS - 1;
-        }
+        if(pos.x < 0 || pos.x >= Board.COLUMNS) {
+            pos = lastPos;
+        } 
         
         //prevents the player from moving off the vertical side of the board
-        if(pos.y < 0) {
-            pos.y = 0;
-        } else if(pos.y >= Board.ROWS) {
-            pos.y = Board.ROWS - 1;
+        if(pos.y < 0 || pos.y >= Board.ROWS) {
+            pos = lastPos;
+        } 
+        
+        if (walls.contains(pos)) {
+            pos = lastPos;
         }
     }
     
