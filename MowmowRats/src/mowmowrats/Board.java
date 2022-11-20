@@ -186,7 +186,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         Random choice = new Random();
         Point pos = new Point();
         
-        switch (choice.nextInt(1)) {
+        switch (choice.nextInt(4)) {
             case 0 -> {
                 pos.x = 2;
                 for (int i=1; i<=5; i++) {
@@ -224,15 +224,116 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                     walls.add(pos);
                 }
             }
-            /*case 1 -> {
-                
+            case 1 -> { 
+                pos.x = 2;
+                for (int i=2; i<=9; i++) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                for (int i=3; i<=5; i++) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
+                pos = new Point();
+                pos.x = 11;
+                for (int i=0; i<=5; i++) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                pos = new Point();
+                pos.y = 7;
+                for (int i=8; i<=13; i++) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
             }
             case 2 -> {
-                
+                pos.y = 1;
+                for (int i=0; i<=5; i++) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
+                pos = new Point();
+                pos.y = 7;
+                for (int i=7; i>=6; i--) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
+                for (int i=pos.y; i>=3; i--) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                for (int i=pos.x; i<=10; i++) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
+                for (int i=pos.y; i<=7; i++) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                pos = (Point)pos.clone();
+                pos.x--;
+                walls.add(pos);
+                pos = new Point();
+                pos.x = 14;
+                for (int i=0; i<=2; i++) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                for (int i=4; i<=6; i++) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                for (int i=pos.x; i<=17; i++) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
             }
             case 3 -> {
-                
-            }*/
+                pos.y = 3;
+                for (int i=0; i<=7; i++) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
+                for (int i=pos.y; i<=9; i++) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                pos = new Point();
+                pos.x = 13;
+                for (int i=3; i<=7; i++) {
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+                for (int i=pos.x; i<=16; i++) {
+                    pos = (Point)pos.clone();
+                    pos.x = i;
+                    walls.add(pos);
+                }
+                pos = new Point();
+                pos.x = 10;
+                for (int i=0; i<ROWS; i++) {
+                    if (i == 5 || i == 6) continue;
+                    pos = (Point)pos.clone();
+                    pos.y = i;
+                    walls.add(pos);
+                }
+            }
         }
         
         
