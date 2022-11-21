@@ -91,7 +91,10 @@ public class Player {
         }
     }
     
-    //updates the state of the player
+    /**
+     * updates the state of the player
+     * @param walls array list of Point positions of walls on the grid
+     */
     public void tick(ArrayList<Point> walls) {
         //prevents the player from moving off the horizontal side of the board
         if(pos.x < 0 || pos.x >= Board.COLUMNS) {

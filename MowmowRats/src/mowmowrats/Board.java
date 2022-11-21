@@ -23,7 +23,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private Timer timer;
     private Player player;
     private ArrayList<Rat> rats;
-    private ArrayList<Point> walls; //TODO add this later
+    private ArrayList<Point> walls; 
     
     public Board() {
         //set board size
@@ -55,6 +55,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
     
     @Override
+    /**
+     * code for painting each component of the board
+     * @param g Graphics element to be drawn onto
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
@@ -181,8 +185,12 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         rats.removeAll(collectedRats);
     }
     
+    /**
+     * function to pick a random preset of wall schematics to be drawn on the board
+     * @return an array list of Point positions of each wall on the board
+     */
     private ArrayList<Point> generateWalls() {
-        ArrayList<Point> walls = new ArrayList<>();
+        ArrayList<Point> wallList = new ArrayList<>();
         Random choice = new Random();
         Point pos = new Point();
         
@@ -192,36 +200,36 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 for (int i=1; i<=5; i++) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=3; i<=7; i++) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 pos = new Point(14, 3);
-                walls.add(pos);
+                wallList.add(pos);
                 for (int i=4; i<=9; i++) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=13; i>=8; i--) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
-                walls.add(new Point(3, 9));
-                walls.add(new Point(2, 9));
-                walls.add(new Point(4, 9));
-                walls.add(new Point(3, 10));
-                walls.add(new Point(3, 8));
+                wallList.add(new Point(3, 9));
+                wallList.add(new Point(2, 9));
+                wallList.add(new Point(4, 9));
+                wallList.add(new Point(3, 10));
+                wallList.add(new Point(3, 8));
                 pos = new Point(6, 2);
-                walls.add(pos);
+                wallList.add(pos);
                 for (int i=7; i<=11; i++) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
             }
             case 1 -> { 
@@ -229,26 +237,26 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 for (int i=2; i<=9; i++) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=3; i<=5; i++) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 pos = new Point();
                 pos.x = 11;
                 for (int i=0; i<=5; i++) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 pos = new Point();
                 pos.y = 7;
                 for (int i=8; i<=13; i++) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
             }
             case 2 -> {
@@ -256,49 +264,49 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 for (int i=0; i<=5; i++) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 pos = new Point();
                 pos.y = 7;
                 for (int i=7; i>=6; i--) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=pos.y; i>=3; i--) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=pos.x; i<=10; i++) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=pos.y; i<=7; i++) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 pos = (Point)pos.clone();
                 pos.x--;
-                walls.add(pos);
+                wallList.add(pos);
                 pos = new Point();
                 pos.x = 14;
                 for (int i=0; i<=2; i++) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=4; i<=6; i++) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=pos.x; i<=17; i++) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
             }
             case 3 -> {
@@ -306,24 +314,24 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 for (int i=0; i<=7; i++) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=pos.y; i<=9; i++) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 pos = new Point();
                 pos.x = 13;
                 for (int i=3; i<=7; i++) {
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 for (int i=pos.x; i<=16; i++) {
                     pos = (Point)pos.clone();
                     pos.x = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
                 pos = new Point();
                 pos.x = 10;
@@ -331,16 +339,20 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                     if (i == 5 || i == 6) continue;
                     pos = (Point)pos.clone();
                     pos.y = i;
-                    walls.add(pos);
+                    wallList.add(pos);
                 }
             }
         }
         
         
         
-        return walls;
+        return wallList;
     }
     
+    /**
+     * code for drawing the walls on the board
+     * @param g the graphics component that is being drawn on
+     */
     private void drawWalls(Graphics g) {
         g.setColor(new Color(0, 0, 0));
         for (int i=0; i<walls.size(); i++) {
