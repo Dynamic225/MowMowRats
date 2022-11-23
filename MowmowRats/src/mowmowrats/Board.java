@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.ArrayList; 
 import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.*;
 
 /**
@@ -18,13 +19,19 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     public static final int TILE_SIZE = 50;
     public static final int ROWS = 12;
     public static final int COLUMNS = 18;
+    public static final int GAME_TIME = 50; //must be a multiple of 10
     
     
-    
-    private final javax.swing.Timer gameTick; //need to specify swing timer since both swing and util add timer
-    private final Player player;
-    private final ArrayList<Rat> rats;
-    private final ArrayList<Point> walls; 
+    private Timer timer;
+    private TimerTask timeTick;
+    private TimerTask ratWave;
+    private TimerTask stopGame;
+    private int gameTime;
+    private javax.swing.Timer gameTick; //need to specify swing timer since both swing and util add timer
+    private Player player;
+    private ArrayList<Rat> rats;
+    private ArrayList<Point> walls; 
+    private boolean skipNextRatWave;
     
     public Board() {
         //set board size
@@ -40,6 +47,42 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         //timer will call the actionPerformed() method every DELAY ms
         gameTick = new javax.swing.Timer(DELAY, this);
         gameTick.start();
+        
+        gameTime = GAME_TIME;
+        
+        skipNextRatWave = false;
+        
+        timer = new Timer();
+        
+        timeTick = new TimerTask() {
+            @Override
+            public void run() {
+                gameTime--;
+            }
+        };
+        
+        ratWave = new TimerTask() {
+            @Override
+            public void run() {
+                if (skipNextRatWave) {
+                    skipNextRatWave = false;
+                    return;
+                }
+                rats = populateRats();
+            }
+        };
+        
+        stopGame = new TimerTask () {
+            @Override
+            public void run() {
+                timer.cancel();
+                rats.clear();
+            }
+        };
+        
+        timer.scheduleAtFixedRate(timeTick, 1000, 1000);
+        timer.scheduleAtFixedRate(ratWave, 10000, 10000);
+        timer.schedule(stopGame, GAME_TIME * 1000);
     }
     
     
@@ -51,6 +94,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         player.tick(walls);
         
         collectRats();
+        
+        if (rats.isEmpty()) {
+            rats = populateRats();
+            skipNextRatWave = true;
+        }
         
         repaint();
     }
@@ -73,6 +121,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         }
         player.draw(g, this);
         
+        drawTimer(g);
         drawScore(g);
         
         Toolkit.getDefaultToolkit().sync();
@@ -127,7 +176,25 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
     
     private void drawTimer(Graphics g) {
+        String text = "Time Remaining: " + gameTime;
+        //cast the graphics to 2d to make it look nice
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         
+        //set text color and font
+        g2d.setColor(new Color(0, 0, 0));
+        g2d.setFont(new Font("Lato", Font.BOLD, 25));
+        
+        FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
+        Rectangle rect = new Rectangle(0, 0, TILE_SIZE * COLUMNS, TILE_SIZE);
+        
+        int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+        int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
+        
+        //draw the string
+        g2d.drawString(text, x, y);
     }
     
     /**
@@ -135,7 +202,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
      * @param g the graphics component
      */
     private void drawScore(Graphics g) {
-        String text = "Rats collected: " + player.getScore();
+        String text = "Rats Collected: " + player.getScore();
         //cast the graphics to 2d to make it look nice
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
