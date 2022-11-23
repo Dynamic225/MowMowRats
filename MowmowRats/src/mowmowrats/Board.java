@@ -16,7 +16,7 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener, KeyListener {
     //set the constants
     private final int DELAY = 25;
-    private static final int GAME_TIME = 5; //game time in seconds
+    private static final int GAME_TIME = 50; //game time in seconds
     private static final int NUM_RATS = 10;
     public static final int TILE_SIZE = 50;
     public static final int ROWS = 12;
