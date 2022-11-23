@@ -16,11 +16,11 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener, KeyListener {
     //set the constants
     private final int DELAY = 25;
+    private static final int GAME_TIME = 50; //must be a multiple of 10
+    private static final int NUM_RATS = 10;
     public static final int TILE_SIZE = 50;
     public static final int ROWS = 12;
     public static final int COLUMNS = 18;
-    public static final int GAME_TIME = 50; //must be a multiple of 10
-    
     
     private Timer timer;
     private TimerTask timeTick;
@@ -231,12 +231,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         ArrayList ratList = new ArrayList<Rat>();
         ArrayList ratPosList = new ArrayList<Point>();
         Random rand = new Random();
-        Random ratAmt = new Random();
-        int upperBound = 20;
-        int lowerBound = 5;
-        int randomRat = ratAmt.nextInt(lowerBound, upperBound);
         
-        for (int i=0; i < randomRat; i++) {
+        for (int i=0; i < NUM_RATS; i++) {
             int ratX = -1;
             int ratY = -1;
             Point ratPos = new Point(ratX, ratY);
