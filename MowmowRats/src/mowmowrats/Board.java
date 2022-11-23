@@ -32,8 +32,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private ArrayList<Rat> rats;
     private ArrayList<Point> walls; 
     private boolean skipNextRatWave;
+    private boolean gameOver;
     
     public Board() {
+        //initialize gameOver to false
+        gameOver = false;
         //set board size
         setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * (ROWS + 2)));
         //set background color
@@ -77,6 +80,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             public void run() {
                 timer.cancel();
                 rats.clear();
+                gameOver = true;
             }
         };
         
@@ -95,7 +99,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         
         collectRats();
         
-        if (rats.isEmpty()) {
+        if (rats.isEmpty() && gameTime > 0) {
             rats = populateRats();
             skipNextRatWave = true;
         }
@@ -124,6 +128,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         drawTimer(g);
         drawScore(g);
         
+        if (gameOver) {
+            drawGameOver(g);
+        }
+        
         Toolkit.getDefaultToolkit().sync();
     }
     
@@ -135,7 +143,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         //send pressed key events to player
-        player.keyPressed(e);
+        if (!gameOver) player.keyPressed(e);
     }
     
     @Override
@@ -215,6 +223,28 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
         Rectangle rect = new Rectangle(0, TILE_SIZE * (ROWS + 1), TILE_SIZE * COLUMNS, TILE_SIZE);
+        
+        int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+        int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
+        
+        //draw the string
+        g2d.drawString(text, x, y);
+    }
+    
+    public void drawGameOver(Graphics g) {
+        String text = "Game Over";
+        //cast the graphics to 2d to make it look nice
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        
+        //set text color and font
+        g2d.setColor(new Color(0, 0, 0));
+        g2d.setFont(new Font("Lato", Font.BOLD, 50));
+        
+        FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
+        Rectangle rect = new Rectangle(0, TILE_SIZE * (ROWS / 2 + 1), TILE_SIZE * COLUMNS, TILE_SIZE);
         
         int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
@@ -433,7 +463,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
      * @param g the graphics component that is being drawn on
      */
     private void drawWalls(Graphics g) {
-        g.setColor(new Color(0, 0, 0));
+        g.setColor(new Color(33, 30, 20));
         for (int i=0; i<walls.size(); i++) {
             Point pos = walls.get(i);
             g.fillRect(
