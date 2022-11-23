@@ -16,7 +16,7 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener, KeyListener {
     //set the constants
     private final int DELAY = 25;
-    private static final int GAME_TIME = 50; //must be a multiple of 10
+    private static final int GAME_TIME = 5; //game time in seconds
     private static final int NUM_RATS = 10;
     public static final int TILE_SIZE = 50;
     public static final int ROWS = 12;
@@ -129,6 +129,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         drawScore(g);
         
         if (gameOver) {
+            g.setColor(new Color(255, 255, 255, 50));
+            g.fillRect(0, 0, TILE_SIZE * COLUMNS, TILE_SIZE * (ROWS + 2));
             drawGameOver(g);
         }
         
@@ -192,7 +194,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         
         //set text color and font
-        g2d.setColor(new Color(0, 0, 0));
+        g2d.setColor(Color.black);
         g2d.setFont(new Font("Lato", Font.BOLD, 25));
         
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
@@ -218,7 +220,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         
         //set text color and font
-        g2d.setColor(new Color(0, 0, 0));
+        g2d.setColor(Color.black);
         g2d.setFont(new Font("Lato", Font.BOLD, 25));
         
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
@@ -240,11 +242,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         
         //set text color and font
-        g2d.setColor(new Color(0, 0, 0));
+        g2d.setColor(Color.black);
         g2d.setFont(new Font("Lato", Font.BOLD, 50));
         
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
-        Rectangle rect = new Rectangle(0, TILE_SIZE * (ROWS / 2 + 1), TILE_SIZE * COLUMNS, TILE_SIZE);
+        Rectangle rect = new Rectangle(0, TILE_SIZE * ROWS / 2, TILE_SIZE * COLUMNS, TILE_SIZE);
         
         int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
