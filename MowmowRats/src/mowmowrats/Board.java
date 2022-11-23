@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.Point;
 import java.util.ArrayList; 
 import java.util.Random;
+import java.util.Timer;
 import javax.swing.*;
 
 /**
@@ -20,14 +21,14 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     
     
     
-    private Timer timer;
-    private Player player;
-    private ArrayList<Rat> rats;
-    private ArrayList<Point> walls; 
+    private final javax.swing.Timer gameTick; //need to specify swing timer since both swing and util add timer
+    private final Player player;
+    private final ArrayList<Rat> rats;
+    private final ArrayList<Point> walls; 
     
     public Board() {
         //set board size
-        setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * ROWS));
+        setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * (ROWS + 2)));
         //set background color
         setBackground(new Color(232, 218, 160));
         
@@ -37,8 +38,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         rats = populateRats();
         
         //timer will call the actionPerformed() method every DELAY ms
-        timer = new Timer(DELAY, this);
-        timer.start();
+        gameTick = new javax.swing.Timer(DELAY, this);
+        gameTick.start();
     }
     
     
@@ -63,6 +64,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         super.paintComponent(g);
         
         drawBackground(g);
+        drawPadding(g);
         
         drawWalls(g);
         
@@ -105,13 +107,27 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                     //draw a square tile at current row/column pos
                     g.fillRect(
                         col * TILE_SIZE,
-                        row * TILE_SIZE,
+                        (row + 1) * TILE_SIZE,
                         TILE_SIZE,
                         TILE_SIZE
                     );
                 }
             }
         }
+    }
+    
+    /**
+     * Draw the padding where the text information is stored
+     * @param g the graphics component
+     */
+    private void drawPadding(Graphics g) {
+        g.setColor(new Color(244, 232, 193));
+        g.fillRect(0, 0, TILE_SIZE * COLUMNS, TILE_SIZE);
+        g.fillRect(0, (ROWS + 1) * TILE_SIZE, TILE_SIZE * COLUMNS, TILE_SIZE);
+    }
+    
+    private void drawTimer(Graphics g) {
+        
     }
     
     /**
@@ -127,11 +143,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         
         //set text color and font
-        g2d.setColor(new Color(82, 31, 94));
+        g2d.setColor(new Color(0, 0, 0));
         g2d.setFont(new Font("Lato", Font.BOLD, 25));
         
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
-        Rectangle rect = new Rectangle(0, TILE_SIZE * (ROWS - 1), TILE_SIZE * COLUMNS, TILE_SIZE);
+        Rectangle rect = new Rectangle(0, TILE_SIZE * (ROWS + 1), TILE_SIZE * COLUMNS, TILE_SIZE);
         
         int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
@@ -359,7 +375,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             Point pos = walls.get(i);
             g.fillRect(
                 pos.x * TILE_SIZE,
-                pos.y * TILE_SIZE,
+                (pos.y + 1) * TILE_SIZE,
                 TILE_SIZE,
                 TILE_SIZE
             );

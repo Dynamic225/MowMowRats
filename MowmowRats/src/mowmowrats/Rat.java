@@ -58,7 +58,7 @@ public class Rat {
         g.drawImage(
             image, 
             pos.x * Board.TILE_SIZE, 
-            pos.y * Board.TILE_SIZE, 
+            (pos.y + 1) * Board.TILE_SIZE, 
             Board.TILE_SIZE,
             Board.TILE_SIZE,
             observer
