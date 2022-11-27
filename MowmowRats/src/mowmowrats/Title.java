@@ -2,6 +2,7 @@ package mowmowrats;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class Title extends JPanel {
     private final Color T_COLOR = new Color(0x2e0c47);
     private BufferedImage bgImage;
     
-    public Title() {
+    public Title(ActionListener runGame) {
         setPreferredSize(new Dimension(T_WIDTH, T_HEIGHT));
         setLayout(null);
         
@@ -44,7 +45,7 @@ public class Title extends JPanel {
         
         JButton startButton = new JButton("Start");
         startButton.setBounds((C_WIDTH - B_WIDTH)/2, TILE_SIZE*2, B_WIDTH, B_HEIGHT);
-        startButton.addActionListener((e) -> runGame());
+        startButton.addActionListener(runGame);
         setCommonButtonSettings(startButton);
         container.add(startButton);
         
