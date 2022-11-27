@@ -39,7 +39,7 @@ public class Title extends JPanel {
         JLabel titleText = new JLabel("MowMow and the Rats");
         titleText.setHorizontalAlignment(JLabel.CENTER);
         titleText.setFont(new Font("Lato", Font.BOLD, 40));
-        titleText.setForeground(T_COLOR);
+        titleText.setForeground(new Color(0xc45709));
         titleText.setBounds(0, 0, C_WIDTH, 40);
         container.add(titleText);
         
