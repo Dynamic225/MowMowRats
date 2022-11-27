@@ -13,6 +13,7 @@ import static mowmowrats.Board.TILE_SIZE;
  */
 public class MowMowRats {
     private static JFrame window;
+    private static ActionListener listener;
     
     /**
      * @param args the command line arguments
@@ -24,7 +25,7 @@ public class MowMowRats {
         window.setResizable(false);
         window.setLocationRelativeTo(null);
         
-        ActionListener listener = (e) -> {
+        listener = (e) -> {
             SwingUtilities.invokeLater(() -> runGame());
         };
         
@@ -35,7 +36,7 @@ public class MowMowRats {
     
     public static void runGame() {
         window.getContentPane().removeAll();
-        Board board = new Board();
+        Board board = new Board(listener);
         window.add(board);
         window.addKeyListener(board);
         window.pack();

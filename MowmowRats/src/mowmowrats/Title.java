@@ -16,14 +16,14 @@ import static mowmowrats.Board.TILE_SIZE;
  * @author Anthony, Ashley
  */
 public class Title extends JPanel {
-    private final int T_WIDTH = TILE_SIZE * COLUMNS;
-    private final int T_HEIGHT = TILE_SIZE * (ROWS + 2);
-    private final int C_WIDTH = TILE_SIZE * 12;
-    private final int C_HEIGHT = TILE_SIZE * 8;
-    private final int B_WIDTH = 140;
-    private final int B_HEIGHT = 65;
-    private final Color B_COLOR = new Color(0xddb439);
-    private final Color T_COLOR = new Color(0x2e0c47);
+    public static final int T_WIDTH = TILE_SIZE * COLUMNS;
+    public static final int T_HEIGHT = TILE_SIZE * (ROWS + 2);
+    public static final int C_WIDTH = TILE_SIZE * 12;
+    public static final int C_HEIGHT = TILE_SIZE * 8;
+    public static final int B_WIDTH = 140;
+    public static final int B_HEIGHT = 65;
+    public static final Color B_COLOR = new Color(0xddb439);
+    public static final Color T_COLOR = new Color(0x2e0c47);
     private BufferedImage bgImage;
     
     public Title(ActionListener runGame) {
@@ -83,7 +83,7 @@ public class Title extends JPanel {
      * Set the button parameters that are the same
      * @param button the button to have set
      */
-    private void setCommonButtonSettings(JButton button) {
+    public static void setCommonButtonSettings(JButton button) {
         button.setFocusable(false);
         button.setFont(new Font("Lato", Font.BOLD, 25));
         button.setBackground(B_COLOR);
