@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.util.ArrayList;
 
 /**
  * Stores information about the player
@@ -22,6 +23,12 @@ public class Player {
     //current position of the player on the board
     private Point pos;
     
+    //last position of the player on the board before most recent translate
+    private Point lastPos;
+    
+    //has a tick passed yet
+    private boolean hasTicked;
+    
     //keep track of the score
     private int score;
     
@@ -33,6 +40,8 @@ public class Player {
         
         //initialize the position and score
         pos = new Point(0, 0);
+        lastPos = pos;
+        hasTicked = true;
         score = 0;
     }
     
@@ -58,7 +67,7 @@ public class Player {
         g.drawImage(
             image, 
             pos.x * Board.TILE_SIZE, 
-            pos.y * Board.TILE_SIZE, 
+            (pos.y + 1) * Board.TILE_SIZE, 
             Board.TILE_SIZE, 
             Board.TILE_SIZE, 
             observer
@@ -67,42 +76,52 @@ public class Player {
     
     /**
      * defines the movement of the character to the keys pressed
-     * 
-     * @param event represents the response to the key being pressed
+     * @param e key event
      */
-    public void keyPressed(KeyEvent event) {
-        int key = event.getKeyCode();
+    public void keyPressed(KeyEvent e) {
+        if (hasTicked) {
+            lastPos = (Point)pos.clone();
+            hasTicked = false;
+        }
+        int key = e.getKeyCode();
         
         //move the player depending on key pressed
-        if(key == KeyEvent.VK_UP) {
-            pos.translate(0, -1); //move the character up one space
-        }
-        if(key == KeyEvent.VK_RIGHT) {
-            pos.translate(1, 0); //move the character to the right one space
-        }
-        if(key == KeyEvent.VK_DOWN) {
-            pos.translate(0, 1); //move the character down one space
-        }
-        if(key == KeyEvent.VK_LEFT) {
-            pos.translate(-1, 0); //move the character to the left one space
-        }
+        
+            if (key == KeyEvent.VK_UP) {
+                pos.translate(0, -1); //move the character up one space
+            } 
+            if (key == KeyEvent.VK_RIGHT) {
+                pos.translate(1, 0); //move the character to the right one space
+            } 
+            if (key == KeyEvent.VK_DOWN) {
+                pos.translate(0, 1); //move the character down one space
+            } 
+            if (key == KeyEvent.VK_LEFT) {
+                pos.translate(-1, 0); //move the character to the left one space
+            } 
+        
     }
     
-    //updates the state of the player
-    public void tick() {
+    /**
+     * updates the state of the player
+     * @param walls array list of Point positions of walls on the grid
+     */
+    public void tick(ArrayList<Point> walls) {
         //prevents the player from moving off the horizontal side of the board
-        if(pos.x < 0) {
-            pos.x = 0;
-        } else if(pos.x >= Board.COLUMNS) {
-            pos.x = Board.COLUMNS - 1;
-        }
+        if(pos.x < 0 || pos.x >= Board.COLUMNS) {
+            pos.x = (pos.x < 0) ? 0 : Board.COLUMNS - 1;
+        } 
         
         //prevents the player from moving off the vertical side of the board
-        if(pos.y < 0) {
-            pos.y = 0;
-        } else if(pos.y >= Board.ROWS) {
-            pos.y = Board.ROWS - 1;
+        if(pos.y < 0 || pos.y >= Board.ROWS) {
+            pos.y = (pos.y < 0) ? 0 : Board.ROWS - 1;
+        } 
+        
+        if (walls.contains(pos)) {
+            pos = lastPos;
         }
+        
+        hasTicked = true;
     }
     
     /**
