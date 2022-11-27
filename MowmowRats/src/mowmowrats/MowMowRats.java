@@ -10,7 +10,7 @@ import static mowmowrats.Board.TILE_SIZE;
  *
  * @author Anthony Wittenborn, Matti Lambert,Alexandria Mwaura, Ashley Poteau
  */
-public class MowmowRats {
+public class MowMowRats {
     /**
      * @param args the command line arguments
      */
