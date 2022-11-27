@@ -8,6 +8,11 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.*;
+import static mowmowrats.Title.T_WIDTH;
+import static mowmowrats.Title.T_COLOR;
+import static mowmowrats.Title.B_WIDTH;
+import static mowmowrats.Title.B_HEIGHT;
+import static mowmowrats.Title.setCommonButtonSettings;
 
 /**
  * JPanel which stores board information of the game
@@ -16,8 +21,8 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener, KeyListener {
     //set the constants
     private final int DELAY = 25;
-    private static final int GAME_TIME = 50; //game time in seconds
-    private static final int NUM_RATS = 10;
+    private final int GAME_TIME = 50; //game time in seconds
+    private final int NUM_RATS = 10;
     public static final int TILE_SIZE = 50;
     public static final int ROWS = 12;
     public static final int COLUMNS = 18;
@@ -33,10 +38,12 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private ArrayList<Point> walls; 
     private boolean skipNextRatWave;
     private boolean gameOver;
+    private ActionListener listener;
     
-    public Board() {
+    public Board(ActionListener runGame) {
         //initialize gameOver to false
         gameOver = false;
+        listener = runGame;
         //set board size
         setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * (ROWS + 2)));
         //set background color
@@ -194,7 +201,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         
         //set text color and font
-        g2d.setColor(Color.black);
+        g2d.setColor(T_COLOR);
         g2d.setFont(new Font("Lato", Font.BOLD, 25));
         
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
@@ -220,7 +227,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         
         //set text color and font
-        g2d.setColor(Color.black);
+        g2d.setColor(T_COLOR);
         g2d.setFont(new Font("Lato", Font.BOLD, 25));
         
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
@@ -242,17 +249,28 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         
         //set text color and font
-        g2d.setColor(Color.black);
+        g2d.setColor(T_COLOR);
         g2d.setFont(new Font("Lato", Font.BOLD, 50));
         
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
-        Rectangle rect = new Rectangle(0, TILE_SIZE * ROWS / 2, TILE_SIZE * COLUMNS, TILE_SIZE);
+        Rectangle rect = new Rectangle(0, 160, TILE_SIZE * COLUMNS, TILE_SIZE);
         
         int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
         
         //draw the string
         g2d.drawString(text, x, y);
+        
+        JButton retry = new JButton("Retry");
+        retry.setBounds((T_WIDTH - B_WIDTH)/2, TILE_SIZE*6, B_WIDTH, B_HEIGHT);
+        retry.addActionListener(listener);
+        setCommonButtonSettings(retry);
+        add(retry);
+        JButton quit = new JButton("Quit");
+        quit.setBounds((T_WIDTH - B_WIDTH)/2, TILE_SIZE*9, B_WIDTH, B_HEIGHT);
+        quit.addActionListener((e) -> System.exit(0));
+        setCommonButtonSettings(quit);
+        add(quit);
     }
     
     /**
