@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Stores information about the player
  * 
- * @author Matti Lambert
+ * @author Matti Lambert, Anthony Wittenborn
  */
 public class Player {
     
@@ -32,13 +32,10 @@ public class Player {
     //keep track of the score
     private int score;
     
-    /**
-     * Constructor for the player
-     */
     public Player() {
-        loadImage();
+        loadImage(); //initialize the player image
         
-        //initialize the position and score
+        //initialize the variables
         pos = new Point(0, 0);
         lastPos = pos;
         hasTicked = true;
@@ -46,11 +43,11 @@ public class Player {
     }
     
     /**
-     * loads the Mowmow image file
+     * loads the MowMow image file
      */
     private void loadImage() {
         try {
-            final String imageName = "TempMowMow.png";
+            final String imageName = "MowMow.png";
             image = ImageIO.read(new File("res/" + imageName));
         } catch(IOException exc) {
             System.out.println("Error opening image file: " + exc.getMessage());
@@ -144,7 +141,7 @@ public class Player {
     }
     
     /**
-     * shows the position of the player
+     * gets the position of the player
      * 
      * @return gives the position of the player's icon on the screen
      */

@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author Alexandria Mwaura
+ * @author Alexandria Mwaura, Anthony Wittenborn
  */
 public class Rat {
     
@@ -23,7 +23,7 @@ public class Rat {
     /**
      * constructor for the rat
      * 
-     * @param pos point at which to generate rat
+     * @param ratPos point at which to generate rat
      */
     public Rat(Point ratPos) {
         // load the assets

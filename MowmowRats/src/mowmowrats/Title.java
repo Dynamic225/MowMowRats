@@ -26,6 +26,10 @@ public class Title extends JPanel {
     public static final Color T_COLOR = new Color(0x2e0c47);
     private BufferedImage bgImage;
     
+    /**
+     * constructor for Title
+     * @param runGame ActionListener for starting the game
+     */
     public Title(ActionListener runGame) {
         setPreferredSize(new Dimension(T_WIDTH, T_HEIGHT));
         setLayout(null);
@@ -60,9 +64,11 @@ public class Title extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
+        //draw the background image
         loadImage();
         g.drawImage(bgImage, 0, 0, TILE_SIZE * COLUMNS, TILE_SIZE * (ROWS + 2), null);
         
+        //put a layer of low opacity white over the image to lighten it up a bit
         g.setColor(new Color(255, 255, 255, 10));
         g.fillRect(0, 0, TILE_SIZE * COLUMNS, TILE_SIZE * (ROWS + 2));
     }

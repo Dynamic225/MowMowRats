@@ -21,7 +21,7 @@ import static mowmowrats.Title.setCommonButtonSettings;
 public class Board extends JPanel implements ActionListener, KeyListener {
     //set the constants
     private final int DELAY = 25; //number of miliseconds between each update
-    private final int GAME_TIME = 10; //game time in seconds
+    private final int GAME_TIME = 50; //game time in seconds
     private final int NUM_RATS = 10;
     public static final int TILE_SIZE = 50; //size of the game board tiles in pixels
     public static final int ROWS = 12;
@@ -39,6 +39,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private boolean skipNextRatWave;
     private ActionListener listener;
     
+    /**
+     * constructor for the board
+     * @param runGame the ActionListener that handles restarting the game 
+     */
     public Board(ActionListener runGame) {
         //initialize all class variables
         listener = runGame; //set the listener for restarting the game equal to the passed in runGame listener
