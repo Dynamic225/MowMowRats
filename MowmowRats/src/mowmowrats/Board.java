@@ -172,7 +172,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
     
     /**
-     * Draw the padding where the text information is stored
+     * Draw the padding where the text information is displayed
      * @param g the graphics component
      */
     private void drawPadding(Graphics g) {
@@ -181,6 +181,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g.fillRect(0, (ROWS + 1) * TILE_SIZE, TILE_SIZE * COLUMNS, TILE_SIZE);
     }
     
+    /**
+     * Draw the text that displays the time remaining
+     * @param g the graphics component
+     */
     private void drawTimer(Graphics g) {
         String text = "Time Remaining: " + gameTime;
         //cast the graphics to 2d to make it look nice
@@ -229,6 +233,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         g2d.drawString(text, x, y);
     }
     
+    /**
+     * draw the game over text and insert buttons to retry or quit
+     * @param g 
+     */
     public void drawGameOver(Graphics g) {
         String text = "Game Over";
         //cast the graphics to 2d to make it look nice
@@ -264,11 +272,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     
     /**
      * Put the rats on the board in random locations
-     * @return ratList the list of rats
+     * @return an ArrayList of Rat objects
      */
     private ArrayList populateRats() {
         ArrayList ratList = new ArrayList<Rat>();
-        ArrayList ratPosList = new ArrayList<Point>();
+        ArrayList ratPosList = new ArrayList<Point>(); //temporary list to make sure rats do not overlap
         Random rand = new Random();
         
         for (int i=0; i < NUM_RATS; i++) {
@@ -288,7 +296,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
     
     /**
-     * Removes the rats from the board and adds to the score
+     * Removes the collected rats from the board and adds to the score
      */
     private void collectRats() {
         ArrayList collectedRats = new ArrayList<Rat>();
