@@ -34,6 +34,9 @@ public class MowMowRats {
         window.setVisible(true);
     }
     
+    /**
+     * clears the title screen from the screen then adds the game board
+     */
     public static void runGame() {
         window.getContentPane().removeAll();
         Board board = new Board(listener);

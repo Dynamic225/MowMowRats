@@ -20,10 +20,10 @@ import static mowmowrats.Title.setCommonButtonSettings;
  */
 public class Board extends JPanel implements ActionListener, KeyListener {
     //set the constants
-    private final int DELAY = 25;
-    private final int GAME_TIME = 50; //game time in seconds
+    private final int DELAY = 25; //number of miliseconds between each update
+    private final int GAME_TIME = 10; //game time in seconds
     private final int NUM_RATS = 10;
-    public static final int TILE_SIZE = 50;
+    public static final int TILE_SIZE = 50; //size of the game board tiles in pixels
     public static final int ROWS = 12;
     public static final int COLUMNS = 18;
     
@@ -37,30 +37,16 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private ArrayList<Rat> rats;
     private ArrayList<Point> walls; 
     private boolean skipNextRatWave;
-    private boolean gameOver;
     private ActionListener listener;
     
     public Board(ActionListener runGame) {
-        //initialize gameOver to false
-        gameOver = false;
-        listener = runGame;
-        //set board size
-        setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * (ROWS + 2)));
-        //set background color
-        setBackground(new Color(232, 218, 160));
-        
-        //initialize the game state
-        walls = generateWalls(); 
-        player = new Player();
-        rats = populateRats();
-        
+        //initialize all class variables
+        listener = runGame; //set the listener for restarting the game equal to the passed in runGame listener
         //timer will call the actionPerformed() method every DELAY ms
         gameTick = new javax.swing.Timer(DELAY, this);
-        gameTick.start();
+        gameTime = GAME_TIME; //initialize the time tracker to the starting game time
         
-        gameTime = GAME_TIME;
-        
-        skipNextRatWave = false;
+        skipNextRatWave = false; 
         
         timer = new Timer();
         
@@ -78,7 +64,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                     skipNextRatWave = false;
                     return;
                 }
-                rats = populateRats();
+                if (gameTime > 0) rats = populateRats();
             }
         };
         
@@ -86,21 +72,28 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             @Override
             public void run() {
                 timer.cancel();
-                rats.clear();
-                gameOver = true;
             }
         };
+        
+        //initialize the game state
+        walls = generateWalls(); 
+        player = new Player();
+        rats = populateRats();
+        
+        //set board size
+        setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * (ROWS + 2)));
+        //set background color
+        setBackground(new Color(232, 218, 160));
+        
+        gameTick.start(); 
         
         timer.scheduleAtFixedRate(timeTick, 1000, 1000);
         timer.scheduleAtFixedRate(ratWave, 10000, 10000);
         timer.schedule(stopGame, GAME_TIME * 1000);
     }
     
-    
+    //code called every game tick
     @Override
-    /**
-     * code that is called every game tick
-     */
     public void actionPerformed(ActionEvent e) {
         player.tick(walls);
         
@@ -115,10 +108,6 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
     
     @Override
-    /**
-     * code for painting each component of the board
-     * @param g Graphics element to be drawn onto
-     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
@@ -135,7 +124,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         drawTimer(g);
         drawScore(g);
         
-        if (gameOver) {
+        if (gameTime == 0) { //display over board when time runs out
             g.setColor(new Color(255, 255, 255, 50));
             g.fillRect(0, 0, TILE_SIZE * COLUMNS, TILE_SIZE * (ROWS + 2));
             drawGameOver(g);
@@ -151,8 +140,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     
     @Override
     public void keyPressed(KeyEvent e) {
-        //send pressed key events to player
-        if (!gameOver) player.keyPressed(e);
+        //send pressed key events to player if game is still running
+        if (gameTime > 0) player.keyPressed(e);
     }
     
     @Override
